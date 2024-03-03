@@ -19,16 +19,16 @@ My personal coding assistant. With it, you can:
 
 ### Entry point
 
-The entry point of the agent is the `ysistant` service in the `docker-compose.yml` file.
+The entry point of the agent is the `y` service in the `docker-compose.yml` file.
 
-Its code is located @ `/src/ysistant.py`.
+Its code is located @ `/src/y.py`.
 
 ### Usage
 
 - `cp .env.example .env` and fill in the environment variables
-- `docker compose up -d` to start the agent
-- `docker compose exec -it ysistant bash` to enter the container
-- `python ysistant.py` to start the agent
+- `docker compose up -d` to start the agent stack (or `docker compose watch` if you are developing the agent)
+- `docker compose exec -it y bash` to enter the agent container
+- `python y.py "please tell me what you think of this project folder structure"` to talk to the agent
 
 ### Features
 
@@ -36,11 +36,9 @@ Its code is located @ `/src/ysistant.py`.
 
 Files I/O is handled via Docker Compose volumes.
 
-For now I only support output files for code generation that I map to the `out` folder of this very repo. But you can change that to any folder you like on your machine by changing the `volumes` section of the `ysistant` service in the `docker-compose.yml` file.
+The mapped `in` and `out` folders are used to communicate with the agent so it can read and write files.
 
-(I plan to map an input folder as well in the repo, so that the agent can read code and reflect on existing codebases)
-
-#### Function calling
+#### Tools
 
 To write code, an agent needs tools, for instance, to write to files, to read from files, to run code, etc.
 
@@ -49,3 +47,14 @@ Function calling allows you to coerce LLMs into giving consistent responses in t
 - defining function definitions and giving the LLM a prompt
 - use the output of the LLM to call a given function
 - return the output of the function to the LLM
+
+The process is as follows:
+
+- you write a funciton definition in `src/functions.py`
+- you turn it into a LLM tool in `src/tools.py`
+
+Multiple functions can be added to a tool.
+
+Currently supported tools are:
+
+- `file_io`: for reading and writing to files (WIP)

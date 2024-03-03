@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 COPY vertexai-sa.json /workspace/vertexai-sa.json
 COPY .env /workspace/.env
 
-COPY ./src /workspace
+COPY src /workspace

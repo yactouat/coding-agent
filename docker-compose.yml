@@ -1,15 +1,17 @@
 services:
 
-  ysistant:
+  y:
     build: .
     # we let the assistant container up indefinitely
     command: tail -f /dev/null
     develop:
         watch:
           - action: sync
-            path: ./app.py
-            target: /app/app.py
+            path: ./src
+            target: /workspace
           - action: rebuild
             path: requirements.txt
     volumes:
+      #! you can mount any input/output folders of your chosing here
+      # - ./some/path:/workspace/in
       - ./out:/workspace/out
