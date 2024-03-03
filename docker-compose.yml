@@ -1,0 +1,15 @@
+services:
+
+  ysistant:
+    build: .
+    # we let the assistant container up indefinitely
+    command: tail -f /dev/null
+    develop:
+        watch:
+          - action: sync
+            path: ./app.py
+            target: /app/app.py
+          - action: rebuild
+            path: requirements.txt
+    volumes:
+      - ./out:/workspace/out
