@@ -1,10 +1,9 @@
-# ysistant
+# gemini coding agent test
 
 ## what is this?
 
-My personal coding assistant. With it, you can:
-
-- with an input prompt, have the agent generate a codebase in the `out` folder
+An attempt at creating a coding assistant with Gemini. So far I am not very convinced by Google's wrapper lib. Besides, I have a lot of weird 500s when I call the Vertex AI inference endpoints, this sucks!
+I'd better go back to LangChain...
 
 ## How this works
 
@@ -50,11 +49,12 @@ Function calling allows you to coerce LLMs into giving consistent responses in t
 
 The process is as follows:
 
-- you write a funciton definition in `src/functions.py`
-- you turn it into a LLM tool in `src/tools.py`
+- you write a function definition in `src/func_declarations.py`
+- you turn it into a LLM tool in `src/lib.py`
 
 Multiple functions can be added to a tool.
 
 Currently supported tools are:
 
+- `code_writing`: for writing code
 - `file_io`: for reading and writing to files (WIP)
