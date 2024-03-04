@@ -2,8 +2,7 @@
 
 ## what is this?
 
-An attempt at creating a coding assistant with Gemini. So far I am not very convinced by Google's wrapper lib. Besides, I have a lot of weird 500s when I call the Vertex AI inference endpoints, this sucks!
-I'd better go back to LangChain...
+An attempt at creating a coding assistant with Gemini.
 
 ## How this works
 
@@ -36,6 +35,8 @@ Its code is located @ `/src/y.py`.
 Files I/O is handled via Docker Compose volumes.
 
 The mapped `in` and `out` folders are used to communicate with the agent so it can read and write files.
+
+Somehow I have trouble telling Gemini to write output to the specified path, if you guys have any idea, please let me know!
 
 #### Tools
 

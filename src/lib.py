@@ -7,19 +7,11 @@ from vertexai.generative_models import (
 
 from func_declarations import (
     read_file_func,
-    write_code_func,
     write_file_func
 )
 
-code_writing_tool = Tool(
-    function_declarations=[
-        write_code_func
-    ]
-)
-code_writing_llm = GenerativeModel(
-    # "chat-bison-32k@002",
-    "gemini-pro",
-    tools=[code_writing_tool]
+generic_llm = GenerativeModel(
+    "gemini-pro"
 )
 
 file_io_tool = Tool(
@@ -53,33 +45,10 @@ def read_file(*, path: str) -> str | None:
     except Exception as e:
         return None
     
-def write_code(*, code: str) -> str | None:
-    chat = code_writing_llm.start_chat()
-    chat_res = chat.send_message(f"""You are a software developer.
-With the code below, delimited by dashes, refactor to make it more efficient.
-Do not hesitate to the features that you see fit to the existing code.
---------------------------------
-{code}""")
-    try:
-        return chat_res.candidates[0].content.parts[0].text # type: ignore
-    except Exception as e:
-        return None
-    
-def write_file(*, path: str, content: str) -> str | None:
-    if not os.path.exists(path):
-        return None
-    try:
-        with open(path, "a") as file:
-            file.write('\n\n# ---SO GENERATED CONTENT---\n\n')
-            file.write(content)
-            file.write('\n\n# ---EO GENERATED CONTENT---\n\n')
-            return content
-    except Exception as e:
-        return None
-
 def return_function_call_res(chat_res):
     func_name = None
     function_call_res = None
+    kwargs = {}
     if hasattr(chat_res, 'candidates') and hasattr(chat_res.candidates[0].content.parts[0], 'function_call'): # type: ignore
         func_call = chat_res.candidates[0].content.parts[0].function_call # type: ignore
         func_name = func_call.name
@@ -90,4 +59,4 @@ def return_function_call_res(chat_res):
             kwargs = {arg_name: arg_value for arg_name, arg_value in func_call.args.items()}
             function_call_res = func_object(**kwargs)
             print(f"function call result: {function_call_res}")
-    return func_name, function_call_res
+    return func_name, function_call_res, kwargs
