@@ -36,7 +36,7 @@ Files I/O is handled via Docker Compose volumes.
 
 The mapped `in` and `out` folders are used to communicate with the agent so it can read and write files.
 
-Somehow I have trouble telling Gemini to write output to the specified path, if you guys have any idea, please let me know!
+Writing to files is made programmatically without using LLMs (safer and more practical).
 
 #### Tools
 

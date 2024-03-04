@@ -6,8 +6,7 @@ from vertexai.generative_models import (
 )
 
 from func_declarations import (
-    read_file_func,
-    write_file_func
+    read_file_func
 )
 
 generic_llm = GenerativeModel(
@@ -16,8 +15,7 @@ generic_llm = GenerativeModel(
 
 file_io_tool = Tool(
     function_declarations=[
-        read_file_func,
-        write_file_func
+        read_file_func
     ]
 )
 

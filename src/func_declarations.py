@@ -8,15 +8,3 @@ read_file_func = FunctionDeclaration(
         "properties": {"path": {"type": "string", "description": "path to the file"}},
     },
 )
-
-write_file_func = FunctionDeclaration(
-    name="write_file",
-    description="write to a file",
-    parameters={
-        "type": "object",
-        "properties": {
-            "path": {"type": "string", "description": "path to the file"},
-            "content": {"type": "string", "description": "content to write"},
-        },
-    },
-)
